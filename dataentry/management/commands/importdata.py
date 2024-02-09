@@ -1,4 +1,5 @@
 import csv
+from django.db import DataError
 from django.core.management.base import BaseCommand, CommandError
 from django.apps import apps
 
@@ -23,11 +24,21 @@ class Command(BaseCommand):
 
         if not model:
             raise CommandError(f'Model "{model_name}" not found in any app')
+        
+        
+        model_fields = [field.name for field in model._meta.fields if field.name != 'id']
+        print(model_fields)
 
         unique_identifiers = set()
 
         with open(file_path, 'r') as file:
             reader = csv.DictReader(file)
+            csv_header = reader.fieldnames
+            
+            if csv_header != model_fields:
+                raise DataError(f'CSV file doesnot match with the {model_name} table fields')
+            
+            
             for row in reader:
                 # Check if the record already exists based on unique identifiers
                 unique_identifier = tuple(row.values())
