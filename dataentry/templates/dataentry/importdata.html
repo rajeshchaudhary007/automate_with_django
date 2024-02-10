@@ -1,4 +1,6 @@
+
 {% extends "base.html" %}
+{% load static %}
  {% block content %}
     <div class='container'>
         <h3 class="text-center">Import Data to the Database Tables</h3>
@@ -30,6 +32,12 @@
     </div>
 
     {% endblock %}
+
+    {% block javascript %}
+        <script src="{% static 'dataentry/js/custom.js' %}"></script>
+    {% endblock %}
+
+   
 
 
 
