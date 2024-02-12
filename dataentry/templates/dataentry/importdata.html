@@ -1,20 +1,21 @@
 
 {% extends "base.html" %}
-{% load static %}
+
  {% block content %}
-    <div class='container'>
-        <h3 class="text-center">Import Data to the Database Tables</h3>
-        <form action="{% url 'import_data' %}" method="POST" enctype="multipart/form-data" style="max-width: 600px; margin:auto; padding-top:50px">
+    <div class='container alert-primary mt-5 rounded shadow' style="max-width:600px; padding:50px;">
+
+        <form action="{% url 'import_data' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
+            <h3 class="text-center mb-5">Import Data to the Database Tables</h3>
             <div class='form-group'>
-                <label for="file_path">
+                <label for="file_path" class="form-label">
                     Upload CSV File
                 </label>
                 <input type='file' name="file_path" class="form-control" required>
             </div>
 
-            <div class='form-group'>
-                <label for="model_name">
+            <div class='form-group mt-4'>
+                <label for="model_name" class="form-label">
                     Select Database Table
                 </label>
                <select name='model_name' class="form-control" required>
@@ -25,17 +26,14 @@
                </select>
             </div>
 
-            <input type="submit" value="Import Data" class="btn btn-primary">
-            {% include 'dataentry/alerts.html' %}
+            <input type="submit" value="Import Data" class="btn btn-primary mt-4 mb-5">
+            {% include 'alerts.html' %}
 
         </form>
     </div>
 
     {% endblock %}
 
-    {% block javascript %}
-        <script src="{% static 'dataentry/js/custom.js' %}"></script>
-    {% endblock %}
 
    
 
