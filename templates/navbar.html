@@ -1,9 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}">Automate <i class="fa-solid fa-robot"></i></a>
-        <div>
-            <button type="button" class="btn btn-primary">Login</button>
-            <button type="button" class="btn btn-success">Register</button>
+        <div class="d-flex gap-2 justify-content-center align-items-center">
+          {% if user.is_authenticated %}
+
+            {% comment %} <div class="avatar border border-2 border-info">
+              {{ user.username.0|upper }}
+          </div> {% endcomment %}
+            <span class="fw-semibold text-secondary p-1 border border-2 border-warning rounded-2">{{user.username|capfirst}}</span>
+            <a class="float-right btn btn-outline-danger" href="{% url 'logout' %}">Logout</a>
+      
+          {% else %}
+            <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+            <a class="btn btn-success" href="{% url 'register' %}">Register</a>
+          {% endif %}
         </div>
     </div>
   </nav>

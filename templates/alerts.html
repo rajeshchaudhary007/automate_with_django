@@ -1,11 +1,29 @@
 {% block content %} 
     {% if messages %}
-    <div class="messages mt-2" id="messages">
-      {% for message in messages %}
-      <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
-        {{ message }}
-      </div>
-      {% endfor %}
-    </div>
+        <div class="messages mt-2" id="messages"></div>
+        <script>
+            $(document).ready(function(){
+                {% for message in messages %}
+                    var tag = '{{ message.tags|default:"info" }}';
+                    var messageType = 'error';  
+                    
+                    toastr.options.closeButton = true;
+                    toastr.options.progressBar = true;
+                    toastr.options.positionClass = 'toast-top-center';
+                    toastr.options.timeOut = 5000;
+
+                    // Map Django message tags to Toastr notification types
+                    if (tag === 'success') {
+                        messageType = 'success';
+                    } else if (tag === 'warning') {
+                        messageType = 'warning';
+                    } else if (tag === 'error') {
+                        messageType = 'error';
+                    }
+
+                    toastr[messageType]('{{ message }}');
+                {% endfor %}
+            });
+        </script>
     {% endif %}
- {% endblock %}
+{% endblock %}

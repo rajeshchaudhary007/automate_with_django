@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% include 'alerts.html' %}
 
 <div class="container" style="padding: 50px; margin-top:5%;">
+    {% if user.is_authenticated %}
   <h2 class="text-center">Automate The Boring Stuff With Django</h2>
   <div class="row pt-5">
       <!-- Import data -->
@@ -95,6 +97,32 @@
           </a>
       </div>
   </div>
+  {% else %}
+  <div class="home-info">
+    <h2 class="text-center">Elevate Your Daily Grind: The Automation Odyssey</h2>
+    <p class="lead text-center text-muted">
+        Say farewell to monotony and hello to the future of efficiency! 🚀 "Automate the Boring Stuff with Django" is your gateway to a world where machines do the heavy lifting, and you get to revel in the results.
+    </p>
+
+    <p class="lead text-center text-muted">
+        Dive into this thrilling project-based journey that turns ordinary tasks into a symphony of automation. From data wrangling to scheduling mastery, you'll wield the power of Django to transform the mundane into the extraordinary.
+    </p>
+
+    <p class="lead text-center text-muted">
+        Picture this: Your daily routine made smoother, your tasks completed with a touch of magic. With Django as your digital assistant, you'll navigate the seas of automation effortlessly, leaving behind the tedium and embracing newfound freedom.
+    </p>
+
+    <div style="display: flex; justify-content: center;">
+        <a href="{% url 'login' %}" class="btn btn-primary">Ignite the Spark</a>
+        &nbsp;<a href="{% url 'register' %}" class="btn btn-success">Begin Your Odyssey</a>
+    </div>
+</div>
+
+
+  {% endif %}
+
+
+
 </div>
 
 {% endblock %}
