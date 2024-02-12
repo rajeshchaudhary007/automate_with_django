@@ -3,19 +3,15 @@
 {% block content %}
 {% load crispy_forms_tags %}
    
-
     <div class="container mt-5" style="max-width: 600px;">
-        
-            <h2 class="mb-4 text-center">Login <hr></h2>
-    
+        <h2 class="mb-4 text-center">Login <hr></h2>
         <form method="post" class="card p-4 shadow">
-          
             {% csrf_token %}
             {{ form | crispy }}
             <input type="submit" value="Login" class="btn btn-success mt-3">
             <span class="text-center mt-2">Create a New account.&nbsp;<a href="{% url 'register' %}" class="text-decoration-none">Register</a></span>
-            {% include 'alerts.html' %}
         </form>
+        {% include 'alerts.html' %}
     </div>
     
 {% endblock %}
