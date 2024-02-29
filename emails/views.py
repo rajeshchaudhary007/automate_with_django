@@ -1,12 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 
 from django.conf import settings
 
-from emails.models import Subscriber
+from emails.models import Email, Sent, Subscriber
 from emails.tasks import send_email_task
 from .forms import EmailForm
 from dataentry.utils import send_email_notification
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -32,17 +33,47 @@ def send_email(request):
                 attachment = email.attachment.path
             else:
                 attachment = None
+                
+                
+            email_id = email.id
             
             #hand over email task to celery
-            send_email_task.delay(mail_subject,message,to_email,attachment)
+            send_email_task.delay(mail_subject,message,to_email,attachment,email_id)
 
-            
-         
             
             messages.success(request,'Email sent successfully!')
             return redirect('send_email')
     else:
-        email_form = EmailForm()
+        email = EmailForm()
     
-    context = {'email_form':email_form}
+    context = {'email_form':email}
     return render(request, 'emails/send-email.html',context)
+
+def track_click(request):
+    pass
+
+
+
+
+def track_open(request,unique_id):
+    pass
+
+
+def track_dashboard(request):
+    emails = Email.objects.all().annotate(total_sent=Sum('sent__total_sent'))
+    context = {
+        'emails': emails
+    }
+    return render(request, 'emails/track_dashboard.html', context)
+
+
+
+def track_stats(request,pk):
+    email = get_object_or_404(Email, pk=pk)
+    sent = Sent.objects.get(email=email)
+    
+    context = {
+        'email': email,
+        'total_sent': sent.total_sent,
+    }
+    return render(request, 'emails/track_stats.html', context)

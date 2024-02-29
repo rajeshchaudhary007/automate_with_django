@@ -16,9 +16,8 @@ urlpatterns = [
     path('login/',login_view, name ='login'),
     path('logout/',logout,name='logout'),
     path('emails/',include('emails.urls')),
+    path('image-compression/',include('image_compression.urls')),
     
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -26,7 +26,11 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+CSRF_TURSTED_ORIGINS = ["https://e7a2-27-34-59-64.ngrok-free.app"]
+
+BASE_URL = "https://e7a2-27-34-59-64.ngrok-free.app"
 
 
 # Application definition
@@ -43,10 +47,13 @@ INSTALLED_APPS = [
     'dataentry',
     'uploads',
     'emails',
+    'image_compression',
     
     #third party apps
     'crispy_forms',
     'crispy_bootstrap5',
+    'ckeditor',
+    'anymail',
 ]
 
 MIDDLEWARE = [
@@ -126,10 +133,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
     'config/static',
 ]
-STATIC_ROOT = BASE_DIR / 'static'
+
 
 
 # Default primary key field type
@@ -164,5 +172,23 @@ DEFAULT_FROM_EMAIL = 'Automate with Django <rajeshchaudhary24478546@gmail.com>'
 DEFAULT_TO_EMAIL = 'rajeshch8088@gmail.com'
 
 
+#for bulk email use other email service provider rather than smtp
+# EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+
+# ANYMAIL = {
+#     "SENDINBLUE_API_KEY": config("SENDINBLUE_API_KEY"),
+# }
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 200,
+       
+    },
+}
+
+
