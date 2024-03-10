@@ -36,6 +36,8 @@ BASE_URL = "https://e7a2-27-34-59-64.ngrok-free.app"
 # Application definition
 
 INSTALLED_APPS = [
+    'dal',
+    'dal_select2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'uploads',
     'emails',
     'image_compression',
+    'stockanalysis',
     
     #third party apps
     'crispy_forms',

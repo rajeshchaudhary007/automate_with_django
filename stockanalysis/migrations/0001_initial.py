@@ -12,12 +12,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Upload',
+            name='Stock',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file', models.FileField(upload_to='uploads/')),
-                ('model_name', models.CharField(max_length=50)),
-                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
+                ('name', models.CharField(max_length=255)),
+                ('symbol', models.CharField(max_length=50)),
+                ('sector', models.CharField(blank=True, max_length=100, null=True)),
+                ('exchange', models.CharField(max_length=100)),
+                ('country', models.CharField(blank=True, max_length=100, null=True)),
             ],
         ),
     ]
